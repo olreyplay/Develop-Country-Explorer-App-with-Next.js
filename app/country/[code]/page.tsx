@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getCountryByCode } from "@/lib/countries";
+import { getCountryByCode, getCountriesByCodes } from "@/lib/countries";
 
 type CountryPageProps = {
   params: Promise<{
@@ -10,6 +10,11 @@ type CountryPageProps = {
 export default async function CountryPage({ params }: CountryPageProps) {
   const { code } = await params;
   const country = await getCountryByCode(code);
+
+  const borderCountries =
+    country.borders && country.borders.length > 0
+      ? await getCountriesByCodes(country.borders)
+      : [];
 
   return (
     <main className="mx-auto max-w-5xl p-6">
@@ -69,10 +74,32 @@ export default async function CountryPage({ params }: CountryPageProps) {
               <span className="font-semibold text-gray-900">Currencies:</span>{" "}
               {country.currencies
                 ? Object.values(country.currencies)
-                    .map((currency: any) => currency.name)
+                    .map((c: any) => c.name)
                     .join(", ")
                 : "N/A"}
             </p>
+          </div>
+
+          <div className="mt-8">
+            <h2 className="text-lg font-semibold text-gray-900">
+              Border Countries
+            </h2>
+
+            <div className="mt-3 flex flex-wrap gap-2">
+              {borderCountries.length > 0 ? (
+                borderCountries.map((border: any) => (
+                  <Link
+                    key={border.cca3}
+                    href={`/country/${border.cca3}`}
+                    className="rounded-md border border-gray-900 text-black px-3 py-1 text-sm transition"
+                  >
+                    {border.name.common}
+                  </Link>
+                ))
+              ) : (
+                <p className="text-sm text-gray-600">No bordering countries</p>
+              )}
+            </div>
           </div>
         </div>
       </div>

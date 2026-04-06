@@ -27,3 +27,15 @@ export async function getCountryByCode(code: string) {
 
   return data;
 }
+
+export async function getCountriesByCodes(codes: string[]) {
+  const res = await fetch(
+    `https://restcountries.com/v3.1/alpha?codes=${codes.join(",")}&fields=name,cca3`,
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch border countries");
+  }
+
+  return res.json();
+}
