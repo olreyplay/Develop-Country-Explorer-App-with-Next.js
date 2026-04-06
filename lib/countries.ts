@@ -11,12 +11,19 @@ export async function getCountries() {
 }
 
 export async function getCountryByCode(code: string) {
-  const res = await fetch(`https://restcountries.com/v3.1/alpha/${code}`);
+  const res = await fetch(
+    `https://restcountries.com/v3.1/alpha/${code}?fields=name,flags,population,region,subregion,capital,languages,currencies,area,cca3,borders`,
+  );
 
   if (!res.ok) {
     throw new Error("Failed to fetch country");
   }
 
   const data = await res.json();
-  return data[0];
+
+  if (!data) {
+    throw new Error("Country not found");
+  }
+
+  return data;
 }
