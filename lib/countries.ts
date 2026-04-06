@@ -9,3 +9,14 @@ export async function getCountries() {
 
   return res.json();
 }
+
+export async function getCountryByCode(code: string) {
+  const res = await fetch(`https://restcountries.com/v3.1/alpha/${code}`);
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch country");
+  }
+
+  const data = await res.json();
+  return data[0];
+}

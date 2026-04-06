@@ -1,5 +1,8 @@
+import Link from "next/link";
+
 type CountryCardProps = {
   country: {
+    cca3: string;
     name: {
       common: string;
     };
@@ -15,7 +18,10 @@ type CountryCardProps = {
 
 export default function CountryCard({ country }: CountryCardProps) {
   return (
-    <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+    <Link
+      href={`/country/${country.cca3}`}
+      className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+    >
       <img
         src={country.flags.svg}
         alt={country.flags.alt || `${country.name.common} flag`}
@@ -44,6 +50,6 @@ export default function CountryCard({ country }: CountryCardProps) {
           </p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
