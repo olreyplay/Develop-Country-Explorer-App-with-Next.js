@@ -33,12 +33,33 @@ export default function CountriesList({ countries }: any) {
       return 0;
     });
 
+  const handleReset = () => {
+    setSearch("");
+    setRegion("");
+    setSort("");
+  };
+
   return (
     <div className="mt-6">
-      <div className="flex flex-col gap-4 md:flex-row">
-        <SearchInput value={search} onChange={setSearch} />
-        <RegionFilter value={region} onChange={setRegion} />
-        <SortSelect value={sort} onChange={setSort} />
+      <div className="flex flex-col gap-4 rounded-xl border border-gray-200 p-4">
+        <div className="grid gap-4 md:grid-cols-3">
+          <SearchInput value={search} onChange={setSearch} />
+          <RegionFilter value={region} onChange={setRegion} />
+          <SortSelect value={sort} onChange={setSort} />
+        </div>
+
+        <div className="flex items-center justify-between gap-4">
+          <p className="text-sm text-white">
+            Showing {filteredCountries.length} countries
+          </p>
+
+          <button
+            onClick={handleReset}
+            className="rounded-md border border-gray-300  px-4 py-2 text-sm font-medium text-white transition hover:bg-gray-100"
+          >
+            Reset
+          </button>
+        </div>
       </div>
 
       <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
