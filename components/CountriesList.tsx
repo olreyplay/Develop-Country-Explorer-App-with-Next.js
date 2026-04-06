@@ -62,11 +62,22 @@ export default function CountriesList({ countries }: any) {
         </div>
       </div>
 
-      <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {filteredCountries.map((country: any) => (
-          <CountryCard key={country.cca3} country={country} />
-        ))}
-      </div>
+      {filteredCountries.length > 0 ? (
+        <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {filteredCountries.map((country: any) => (
+            <CountryCard key={country.cca3} country={country} />
+          ))}
+        </div>
+      ) : (
+        <div className="mt-6 rounded-xl border border-dashed border-gray-300 bg-white p-10 text-center">
+          <h2 className="text-lg font-semibold text-gray-900">
+            No Countries Found
+          </h2>
+          <p className="mt-2 text-sm text-gray-600">
+            Try changing your search, region, or sorting options.
+          </p>
+        </div>
+      )}
     </div>
   );
 }
